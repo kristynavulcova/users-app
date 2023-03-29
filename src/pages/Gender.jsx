@@ -16,16 +16,15 @@ const User = () => {
 
     const getUser = async () => {
         empty.current = false;
+        let gender = [];
 
         //localStorage
-        const userStorage = localStorage.getItem("user");
+        const userStorage = localStorage.getItem("users");
 
-        if (userStorage) {
             const tempUsers = JSON.parse(userStorage);
             //console.log(tempUsers);
 
-            let gender = [];
-            
+        
             for (let i = 0; i < tempUsers.length; i++) {
                 if (tempUsers[i].gender.toLowerCase() === params.type) {
                     gender.push(tempUsers[i]); 
@@ -39,36 +38,27 @@ const User = () => {
                 empty.current = true;
             }
             
-        } else {
-            const api = await fetch("https://random-data-api.com/api/v2/users?size=100");
-            const data = await api.json();
-            localStorage.setItem("user", JSON.stringify(data));
-
-            let gender = [];
-            
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].gender.toLowerCase() === params.type) {
-                    gender.push(data[i]); 
+   
+            for (let i = 0; i < userStorage.length; i++) {
+                if (userStorage[i].gender.toLowerCase() === params.type) {
+                    gender.push(userStorage[i]); 
                 }
                
             }
             setUser(gender);
-        }
-      
-
-      
+        
     
     }
 
     return (
         <div>
-        <Wrapper>
-                <h3>Female users</h3>
+            <Wrapper>
+                <h3>{params.type==="female" ? "Female" : "Male"} users</h3>
                 <Grid>
             {user.map(item => (
             <Card key={item.id}>
         <img src={item.avatar} alt="" />
-                    <h4>{item.first_name} {item.last_name}</h4>     
+                    <h4>{item.first_name} {item.last_name}</h4>  
             </Card>
             ))}
                     </Grid>

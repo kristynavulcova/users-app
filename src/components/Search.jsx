@@ -10,6 +10,8 @@ function Search() {
 
     const submitHandler = (e) => {
         e.preventDefault();
+
+        if (input === "") return
         //url adresa se zmeni na to, co je v inputu
         navigate("/searched/" + input);
     }
@@ -20,8 +22,7 @@ function Search() {
              <FaSearch /> 
               <input
                   onChange={(e) => setInput(e.target.value)}
-                  type="text" value={input} />
-              {input}
+                  type="text" value={input} placeholder="Hledat uživatele"/>
           </div>
    </FormStyle>
   )
@@ -44,6 +45,10 @@ const FormStyle = styled.form`
         border-radius:1rem;
         outline:none;
         width:100%;
+
+        &::placeholder{
+        font-size:1.2rem;
+        }
     }
 
     svg{

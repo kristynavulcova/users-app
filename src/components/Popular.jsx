@@ -1,37 +1,13 @@
-import { useEffect, useState } from "react";
 import styled from 'styled-components';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
-const Popular = () => {
-
-    const [popular, setPopular] = useState([]);
-
-    useEffect(() => {
-        getPopular();
-    },[])
-
-    const getPopular = async () => {
-         //localStorage
-        const check = localStorage.getItem("popular");
-
-        if (check) {
-            setPopular(JSON.parse(check));
-        } else {
-              //API
-        const api = await fetch("https://random-data-api.com/api/v2/users?size=9");
-            const data = await api.json();
-            localStorage.setItem("popular", JSON.stringify(data));
-        setPopular(data);
-        }
-
-      
-    }
+const Popular = ({popularUsers}) => {
 
     return (
         <div>
         <Wrapper>
-                <h3>Popular users</h3>
+                <h3>Populární uživatelé</h3>
 
          <Splide options={ {
                     perPage: 5,
@@ -39,7 +15,7 @@ const Popular = () => {
                     arrows: false,
                     gap:"2rem"
                 } }>
-                    {popular.map(user => (
+                    {popularUsers.map(user => (
             <SplideSlide key={user.id}>
                  <Card>
         

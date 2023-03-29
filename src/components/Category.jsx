@@ -1,15 +1,19 @@
-import { AiOutlineWoman,AiOutlineMan } from 'react-icons/ai';
+import { AiOutlineHome, AiOutlineWoman,AiOutlineMan } from 'react-icons/ai';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 const Category = () => {
     return ( 
         <List>
-            <SLink to={"/user/female"}>
+            <SLink to={"/"}>
+                <AiOutlineHome />
+                <h4>Domů</h4>
+            </SLink>
+            <SLink to={"/gender/female"}>
                 <AiOutlineWoman />
                 <h4>Female</h4>
             </SLink>
-            <SLink to={"/user/male"}>
+            <SLink to={"/gender/male"}>
                 <AiOutlineMan />
                 <h4>Male</h4>
             </SLink>

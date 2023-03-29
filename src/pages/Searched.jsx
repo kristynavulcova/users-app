@@ -1,13 +1,11 @@
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-
+import styled from 'styled-components';
 
     const Searched = () => {
         let params = useParams();
-        const filteredResults = useRef([]);
+        const [filteredUser, setFilteredUser] = useState([]);
     
-        const [user, setUser] = useState([
-        ]);
     
         useEffect(() => {
             getUser(params.search);
@@ -15,26 +13,54 @@ import { useParams } from 'react-router-dom';
     
         const getUser = async () => {
             //localStorage
-            const userStorage = localStorage.getItem("user");
-            setUser(JSON.parse(userStorage));
-         
-            
-            filteredResults.current = user.filter(x => x.username.toLowerCase().includes(params.search));
-        
+            const userStorage = localStorage.getItem("users");
+            const parseStorage = JSON.parse(userStorage);
+
+            setFilteredUser(parseStorage.filter(x => x.first_name.toLowerCase().includes(params.search) || x.last_name.toLowerCase().includes(params.search)) );
         }
 
 
   return (
-      <div>
-          <h2>Searched</h2>
-           {filteredResults.current.map((item, key) => (
-            <div key={key}>
+      <Wrapper>
+          <h2>{filteredUser.length === 0 ? "Nic nenalezeno" : ""}</h2>
+          <Grid>
+           {filteredUser.map((item, key) => (
+            <Card key={key}>
                 <img src={item.avatar} alt="" />
                     <h4>{item.first_name} {item.last_name}</h4>     
-            </div>
-            ))}
-    </div>
+            </Card>
+           ))}
+              </Grid>
+    </Wrapper>
   )
 }
 
+const Wrapper = styled.div`
+  margin: 0 1em;
+  padding: 0.25em 1em;
+  color:#fff;
+`;
+
+const Grid = styled.div`
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:3rem;
+`;
+
+const Card = styled.div`
+border:1px solid #144272;
+border-radius:0.2rem;
+
+ img{
+    width:100%;
+    border-radius:2rem;
+ }
+ a{
+    text-decoration:none;
+ }
+ h4{
+    text-align:center;
+    padding:1rem;
+   }
+`;
 export default Searched
