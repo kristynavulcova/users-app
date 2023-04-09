@@ -7,8 +7,7 @@ const User = () => {
     let params = useParams();
     const empty = useRef(false);
 
-    const [user, setUser] = useState([
-    ]);
+    const [user, setUser] = useState([]);
 
     useEffect(() => {
         getUser();
@@ -16,59 +15,36 @@ const User = () => {
 
     const getUser = async () => {
         empty.current = false;
-        let gender = [];
 
         //localStorage
-        const userStorage = localStorage.getItem("users");
+        let userStorage = localStorage.getItem("users");
 
-            const tempUsers = JSON.parse(userStorage);
-            //console.log(tempUsers);
-
+        userStorage = JSON.parse(userStorage);
+    
+        setUser(userStorage.filter(x => x.gender.toLowerCase() === params.type));
         
-            for (let i = 0; i < tempUsers.length; i++) {
-                if (tempUsers[i].gender.toLowerCase() === params.type) {
-                    gender.push(tempUsers[i]); 
-                }
-               
-            }
-            setUser(gender);
-
-            
-            if (!gender.length) {
-                empty.current = true;
-            }
-            
-   
-            for (let i = 0; i < userStorage.length; i++) {
-                if (userStorage[i].gender.toLowerCase() === params.type) {
-                    gender.push(userStorage[i]); 
-                }
-               
-            }
-            setUser(gender);
-        
+        if (!user.length) {
+            empty.current = true;
+        }
     
     }
 
-    return (
-        <div>
-            <Wrapper>
-                <h3>{params.type==="female" ? "Female" : "Male"} users</h3>
-                <Grid>
+return (
+    <div>
+    <Wrapper>
+        <h3>{params.type==="female" ? "Ženy" : "Muži"}</h3>
+        <Grid>
             {user.map(item => (
             <Card key={item.id}>
-        <img src={item.avatar} alt="" />
-                    <h4>{item.first_name} {item.last_name}</h4>  
+                <img src={item.avatar} alt="" />
+                <h4>{item.first_name} {item.last_name}</h4>  
             </Card>
             ))}
-                    </Grid>
-                 <p>{empty.current ? 'nic nenalezeno' : ''}</p>
-       </Wrapper>
-        </div>
-
-        
-       
-    );
+        </Grid>
+        <p>{empty.current ? 'nic nenalezeno' : ''}</p>
+    </Wrapper>
+    </div>    
+ );
 }
 
 const Wrapper = styled.div`

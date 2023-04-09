@@ -3,22 +3,24 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 const Category = () => {
-    return ( 
-        <List>
-            <SLink to={"/"}>
-                <AiOutlineHome />
-                <h4>Domů</h4>
-            </SLink>
-            <SLink to={"/gender/female"}>
-                <AiOutlineWoman />
-                <h4>Female</h4>
-            </SLink>
-            <SLink to={"/gender/male"}>
-                <AiOutlineMan />
-                <h4>Male</h4>
-            </SLink>
-        </List>
-     );
+return ( 
+    <List>
+        <SLink to={"/"}>
+        <AiOutlineHome />
+        <h4>Domů</h4>
+        </SLink>
+
+        <SLink to={"/gender/female"}>
+        <AiOutlineWoman />
+        <h4>Žena</h4>
+        </SLink>
+        
+        <SLink to={"/gender/male"}>
+        <AiOutlineMan />
+        <h4>Muž</h4>
+        </SLink>
+    </List>
+    );
 }
 
 const List = styled.div`

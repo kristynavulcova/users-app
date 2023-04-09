@@ -2,35 +2,33 @@ import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-    const Searched = () => {
-        let params = useParams();
-        const [filteredUser, setFilteredUser] = useState([]);
+const Searched = () => {
+    let params = useParams();
+    const [filteredUser, setFilteredUser] = useState([]);
     
+    useEffect(() => {
+    getUser(params.search);
+    },[params.search])
     
-        useEffect(() => {
-            getUser(params.search);
-        },[params.search])
-    
-        const getUser = async () => {
-            //localStorage
-            const userStorage = localStorage.getItem("users");
-            const parseStorage = JSON.parse(userStorage);
+    const getUser = async () => {
+    //localStorage
+        const userStorage = localStorage.getItem("users");
+        const parseStorage = JSON.parse(userStorage);
 
-            setFilteredUser(parseStorage.filter(x => x.first_name.toLowerCase().includes(params.search) || x.last_name.toLowerCase().includes(params.search)) );
-        }
-
+        setFilteredUser(parseStorage.filter(x => x.first_name.toLowerCase().includes(params.search) || x.last_name.toLowerCase().includes(params.search)) );
+    }
 
   return (
-      <Wrapper>
-          <h2>{filteredUser.length === 0 ? "Nic nenalezeno" : ""}</h2>
-          <Grid>
-           {filteredUser.map((item, key) => (
+    <Wrapper>
+        <h2>{filteredUser.length === 0 ? "Nic nenalezeno" : ""}</h2>
+        <Grid>
+        {filteredUser.map((item, key) => (
             <Card key={key}>
                 <img src={item.avatar} alt="" />
-                    <h4>{item.first_name} {item.last_name}</h4>     
+                <h4>{item.first_name} {item.last_name}</h4>     
             </Card>
-           ))}
-              </Grid>
+        ))}
+        </Grid>
     </Wrapper>
   )
 }

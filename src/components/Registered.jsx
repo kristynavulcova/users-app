@@ -1,38 +1,68 @@
 import styled from 'styled-components';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { Link } from 'react-router-dom';
 
 
 const Registered = ({ registeredUsers }) => {
 
-    return ( 
-        <Wrapper>
-      <h3>Poslední registrovaní uživatelé</h3>
+return ( 
+<Wrapper>
+    <h3>Poslední registrovaní uživatelé</h3>
 
- <Splide options={ {
-            perPage: 6,
-            drag: "free",
-            arrows: false,
-            gap:"2rem"
-        } }>
-            {registeredUsers.map(user => (
+  <Splide options={ {
+      drag: "free",
+      perPage: 6,
+      arrows: false,
+      gap: "2rem",
+      breakpoints: {
+        1400: {
+          perPage: 4,
+         
+        },
+        1024: {
+          perPage: 3,
+         
+        },
+        767: {
+          perPage: 2,
+      
+        },
+        640: {
+          perPage: 1,
+    
+        },
+      }
+      }}>
+    {registeredUsers.map(user => (
     <SplideSlide key={user.id}>
-         <Card>
-
-            <p>{user.username}</p>
-                        <img src={user.avatar} alt={user.avatar} />
-                        <Gradient></Gradient>
-         </Card>
+      <Link to={"user/" + user.id}>
+        <Card>
+        <img src={user.avatar} alt={user.avatar} />
+        <Gradient>
+        <p>{user.username}</p>
+        </Gradient>
+        </Card>
+      </Link> 
    </SplideSlide>
-    ))}
-            
- </Splide>
+    ))}           
+  </Splide>
 </Wrapper>
-        );
+);
 }
+
 const Wrapper = styled.div`
 margin: 0 1em;
 padding: 0.25em 1em;
+`;
+
+const Gradient = styled.div`
+width:100%;
+display: flex;
+align-items: center;
+height: 100%;
+background:rgba(0,0,0,0.5);
+padding:0 0.5em;
 `;
 
 const Card = styled.div`
@@ -41,6 +71,8 @@ border-radius:1.2rem;
 overflow:hidden;
 position:relative;
 background:#144272;
+display: flex;
+align-items: end;
 
 img{
   border-radius:2rem;
@@ -55,22 +87,19 @@ img{
 }
 
 p{
-  position:absolute;
-  bottom:0;
+  position:relative;
+  z-index:10;
   color:#fff;
-  z-index:5;
   width: 100%;
   text-align: center;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+&:hover{
+ background:#127cc2;
 }
 `;
 
-const Gradient = styled.div`
-position:absolute;
-z-index:3;
-width:100%;
-height:20%;
-background:rgba(0,0,0,0.5);
-bottom: 0;
-padding:0 1em;
-`;
+
 export default Registered;
