@@ -8,7 +8,7 @@ const Pages = () => {
     return ( 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/gender/:type" element={<Gender />} />
+        <Route path="/gender/:type" element={<Gender />} />
           <Route path="/searched/:search" element={<Searched />} />
           <Route path="/user/:id" element={<User />} />
         </Routes>

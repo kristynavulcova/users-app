@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState, useRef } from "react";
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const User = () => {
     let params = useParams();
@@ -34,11 +35,13 @@ return (
     <Wrapper>
         <h3>{params.type==="female" ? "Ženy" : "Muži"}</h3>
         <Grid>
-            {user.map(item => (
-            <Card key={item.id}>
-                <img src={item.avatar} alt="" />
-                <h4>{item.first_name} {item.last_name}</h4>  
-            </Card>
+            {user.map((item, key) => (
+            <Link to={"/user/" + item.id} key={key}> 
+                <Card>
+                    <img src={item.avatar} alt="" />
+                    <h4>{item.first_name} {item.last_name}</h4>  
+                </Card>
+            </Link>
             ))}
         </Grid>
         <p>{empty.current ? 'nic nenalezeno' : ''}</p>
@@ -73,6 +76,10 @@ border-radius:0.2rem;
  h4{
     text-align:center;
     padding:1rem;
+    color:#fff;
+   }
+   &:hover h4{
+    color:#127cc2;
    }
 `;
 

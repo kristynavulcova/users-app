@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 const Searched = () => {
     let params = useParams();
@@ -23,10 +24,12 @@ const Searched = () => {
         <h2>{filteredUser.length === 0 ? "Nic nenalezeno" : ""}</h2>
         <Grid>
         {filteredUser.map((item, key) => (
-            <Card key={key}>
+           <Link to={"/user/" + item.id} key={key}> 
+            <Card>
                 <img src={item.avatar} alt="" />
                 <h4>{item.first_name} {item.last_name}</h4>     
             </Card>
+            </Link>
         ))}
         </Grid>
     </Wrapper>
@@ -59,6 +62,11 @@ border-radius:0.2rem;
  h4{
     text-align:center;
     padding:1rem;
+    color:#fff;
+   }
+
+   &:hover h4{
+    color:#127cc2;
    }
 `;
 export default Searched
